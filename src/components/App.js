@@ -12,14 +12,14 @@ class App extends Component {
 
     this.state = {
       taxa: [],
+      searchQuery:'brown tree frog',
+      queryStr:'brown%20tree%20frog',
       // text: '',
     };
-
-    // this.updatePost = this.updatePost.bind( this );
+    this.updateQuery = this.updateQuery.bind( this );
     // this.deletePost = this.deletePost.bind( this );
     // this.createPost = this.createPost.bind( this );
   }
-  
   // componentDidMount() {
   //   let promise = axios.get('https://api.inaturalist.org/v1/users/farawaywolf')
   //   promise.then( result => {
@@ -42,30 +42,49 @@ class App extends Component {
   //   })
   // }  
 
+  updateQuery(e){
+    let str = encodeURI(e)
+    this.setState({
+      query: e,
+      queryStr: str,
+    })
+  }
+
+  searchApiCall = () => {
+    axios.get(`https://api.inaturalist.org/v1/taxa?q=${this.state.queryStr}&is_active=true`).then(result => {console.log(result.data.results);
+      this.setState ({
+        taxa: result.data.results
+      })
+    })
+  }
+
   componentDidMount() {
-    let taxaRequest = axios.get('https://api.inaturalist.org/v1/taxa?q=brown%20tree%20frog&is_active=true')
-    taxaRequest.then(result => {
+    this.updateQuery();
+    this.searchApiCall();
+    // let taxaRequest = axios.get('https://api.inaturalist.org/v1/taxa?q=brown%20tree%20frog&is_active=true')
+    // taxaRequest.then(result => {
+
       // console.log('result.data.results is',result.data.results)
       // console.log('typeof result.data.results is',typeof(result.data.results))
       // console.log('result.data.results[0] is',result.data.results[0])
       // console.log('typeof results.data.results[0] is',typeof(result.data.results[0]))
       // console.log('result.data.results[0]["name"] is',result.data.results[0]['name'])
       // console.log('typeof results.data.results[0]["name"] is',typeof(result.data.results[0]['name']))
-      this.setState ({
-        taxa: result.data.results
-      })
-      console.log('this.state.taxa is',this.state.taxa)
+      // this.setState ({
+      //   taxa: result.data.results
+      // })
+          //console.log('this.state.taxa is',this.state.taxa)
       // console.log('typeof this.state.taxa is',typeof(this.state.taxa))
       // console.log('this.state.taxa[0] is',this.state.taxa[0])
       // console.log('typeof this.state.taxa[0] is',typeof(this.state.taxa[0]))
       // console.log('this.state.taxa[0]["name"] is',this.state.taxa[0]['name'])
       // console.log('typeof this.state.taxa[0]["name"] is',typeof(this.state.taxa[0]['name']))
-      const {name, preferred_common_name, wikipedia_url, id} = this.state.taxa[0];
-      const {square_url} = this.state.taxa[0]['default_photo'];
+      // const {name, preferred_common_name, wikipedia_url, id} = this.state.taxa[0];
+      // const {square_url} = this.state.taxa[0]['default_photo'];
       // console.log('{name}:',{name},{preferred_common_name},{square_url}, {wikipedia_url})
       // console.log('name',name,preferred_common_name,square_url, wikipedia_url)
       // console.log('name[0]',name[0],matched_term[0],default_photo[0])
-    })
+  
   }  
   // updatePost(id, text) {
   //   axios.put(`https://practiceapi.devmountain.com/api/posts?id=${id}`,{text}).then( result => {
@@ -92,14 +111,15 @@ class App extends Component {
   // }
   render() {
     const {taxa} = this.state
-    console.log({taxa})
+    console.log(this.state)
+        //console.log({taxa})
     // let defaultPhoto = default_photo;
     // console.log('defaultPhoto:',defaultPhoto, 'typeof:', typeof(defaultPhoto))
     // console.log('default_photo:',taxa[0].default_photo, 'typeof:', typeof(taxa[0].default_photo))
-    console.log('default_photo:',taxa[0], 'typeof:', typeof(taxa[0]))
+        //console.log('default_photo:',taxa[0], 'typeof:', typeof(taxa[0]))
     return (
       <div className="App__parent">
-        <Header />
+        <Header updateQuery={this.updateQuery.bind(this)} searchButton={this.searchApiCall.bind(this)} hQuery={this.state.searchQuery}/>
 
         <section className="Species__content">
 

@@ -4,12 +4,14 @@ import ProfileIcon from 'react-icons/lib/md/person-outline';
 
 import './Header.css';
 
-import Search from './Search/Search';
+import Search from '../Search/Search';
 
 //////////////////////////////////////////////////////// THIS COMPONENT IS BEING RENDERED IN THE *APP* COMPONENT
 
 export default class Header extends Component {
+
   render() {
+    const {updateQuery, hQuery} = this.props;
     return (
       <section className="Header__parent">
         <section className="Header__content">
@@ -22,7 +24,7 @@ export default class Header extends Component {
 
           {/* Displays the search bar */}
           <div className="Header__right">
-            <Search />
+            <Search updateQuery={updateQuery} searchButton={this.props.searchButton} sQuery={hQuery}/>
 
             {/* Displays the profile icon */}
             <div className="Header__profile">
