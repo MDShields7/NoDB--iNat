@@ -1,0 +1,35 @@
+.App__parent {
+  width: 100%;
+  min-width: 1000px;
+  min-height: 100vh;
+}
+
+.App__content {
+  /* width: 100px; */
+  margin: 0 auto;
+  /* justify-content: center; */
+  align-items: center;
+  min-height: calc( 100vh - 50px );
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Species__content {
+  width: 1000px;
+  min-width: 600px;
+  margin: 20 auto;
+  /* justify-content: center; */
+  align-items: center;
+  min-height: calc( 100vh - 50px );
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+img {
+  height: 500px,
+}
