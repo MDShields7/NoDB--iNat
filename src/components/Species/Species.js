@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import ProfileIcon from 'react-icons/lib/md/person-outline';
+// import ProfileIcon from 'react-icons/lib/md/person-outline';
 
 import './Species.css';
 
 //////////////////////////////////////////////////////// THIS COMPONENT IS BEING RENDERED IN THE *APP* COMPONENT
 
 export default class Compose extends Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
     
-    // this.state = {
-    //   text: ''
-    // };
+  //   // this.state = {
+  //   //   text: ''
+  //   // };
 
-    // this.createPost = this.createPost.bind( this );
-  }
+  //   // this.createPost = this.createPost.bind( this );
+  // }
 
   // updateText( text ) {
   //   this.setState({ text });
@@ -41,7 +41,7 @@ export default class Compose extends Component {
       photo = default_photo.medium_url;
     }
     
-    console.log("species",id, name, latin_name, wiki_url, default_photo)
+        //console.log("species",id, name, latin_name, wiki_url, default_photo)
     // console.log("default_photo", default_photo)
     return (
       <section className="Species_box">

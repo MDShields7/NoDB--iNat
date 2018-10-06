@@ -11,7 +11,7 @@ import Search from '../Search/Search';
 export default class Header extends Component {
 
   render() {
-    const {updateQuery, hQuery} = this.props;
+    const {updateQuery, hQuery, queryLocal, local} = this.props;
     return (
       <section className="Header__parent">
         <section className="Header__content">
@@ -24,8 +24,10 @@ export default class Header extends Component {
 
           {/* Displays the search bar */}
           <div className="Header__right">
+            <button onClick={()=> queryLocal()}>Get Local Favs</button>
+            {/* <button onClick={() => (console.log('wowee'))}>Get Local Favs</button> */}
             <Search updateQuery={updateQuery} searchButton={this.props.searchButton} sQuery={hQuery}/>
-
+            <p>{local}</p>
             {/* Displays the profile icon */}
             <div className="Header__profile">
               <ProfileIcon />
