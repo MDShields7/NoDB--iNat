@@ -19,6 +19,7 @@
 .Species__content {
   width: 1000px;
   min-width: 600px;
+  margin-top: 40px;
   margin: 20 auto;
   /* justify-content: center; */
   align-items: center;
@@ -32,4 +33,16 @@
 
 img {
   height: 500px,
+}
+
+.addFav__parent button {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  /*  
+  cursor: pointer;
+  position: absolute;
+  margin: 0px 10px;
+  top: 50px;
+  */
 }

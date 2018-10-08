@@ -1,0 +1,15 @@
+.addFav__parent button {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    margin: 5px 0px;
+    font-size: 12px;
+    cursor: pointer;
+    color: green
+    /*  
+    
+    position: absolute;
+
+    top: 50px;
+    */
+  }

@@ -11,12 +11,17 @@ class App extends Component {
       taxa: [],
       searchQuery:'brown tree frog',
       queryStr:'brown%20tree%20frog',
-      local:'test',
-      // text: '',
+      // //favList is entire favList
+      getLocalTemp:['hello'],
+      //favId gets add to fav list
+      favId: 0,
     };
     this.updateQuery = this.updateQuery.bind( this );
-    this.queryLocal = this.queryLocal.bind( this );
+    this.queryLocal = this.getLocal.bind( this );
     this.searchApiCall = this.searchApiCall.bind( this );
+    this.addFavFn = this.addFavFn.bind(this);
+    this.getLocal = this.getLocal.bind(this);
+    this.postLocal = this.postLocal.bind(this);
   }
   // EXTERNAL REQUESTS
   updateQuery(e){
@@ -37,22 +42,55 @@ class App extends Component {
     this.updateQuery();
     this.searchApiCall();
   }  
+  //FUNCTIONAL REQUESTS
+  addFavFn(e){
+    console.log('addFavFn running, before postLocal')
+
+    // this.setState({
+    //   favId: e,
+    // })
+    this.postLocal(e);
+    // console.log('addFavFn running, after postLocal, e:', e,'favId is', this.state.favId)
+  }
   // LOCAL REQUESTS
-  queryLocal(){
-    axios.get('http://localhost:4000/api/data').then(res => {this.setState({
-        local: res.data
-      }, console.log('queryLocal running,', this.state.local))
+  getLocal(){
+    axios.get('http://localhost:4000/api/data').then(res => {
+      console.log('getLocal running, res.data is',res.data);
+      let val = this.state.getLocalTemp.push(res.data)
+      this.setState({
+        getLocalTemp: val
+      }, console.log('getLocal running, this.state.getLocalTemp is', this.state.getLocalTemp))
     })
   }
+//   postLocal(){
+//     let {favId} = this.state;
+//     axios.get('http://localhost:4000/api/data', {favId}).then(res => {this.setState({
+//       local: res.data
+//       }, console.log('postLocal running, this.state.local', this.state.local), console.log('postLocal running, res.data', res.data))
+//   })
+// }
+postLocal(){
+  axios.post('http://localhost:4000/api/data', {id:'testPost'}).then(res => {
+
+    console.log('postLocal running, res.data is',res.data);
+    // this.setState({
+    //   local: val
+    // }
+    // , console.log('getLocal running, this.state.local is', this.state.local)
+
+  })
+}
 
   render() {
-    const {taxa} = this.state
-    console.log('render running',this.state)
+    const {taxa, favId} = this.state
+    //console.log('render running',this.state)
+    console.log('this.state',this.state)
     return (
       <div className="App__parent">
         <Header 
-        queryLocal={this.queryLocal}
-        local={this.state.local}
+        getLocal={this.getLocal}
+        postLocal={this.postLocal}
+        local={this.state.getLocalTemp}
         updateQuery={this.updateQuery} 
         searchButton={this.searchApiCall} 
         hQuery={this.state.searchQuery}/>
@@ -60,8 +98,11 @@ class App extends Component {
 
           {
             taxa.map(elem => (
-              <Species 
-              key={elem.id}
+              <Species
+              key={elem.key}
+              addFavFn={this.addFavFn}
+              favId={favId}
+              id={elem.id}
               latin_name={elem.name}
               wiki_url={elem.wikipedia_url}
               name={elem.preferred_common_name}
