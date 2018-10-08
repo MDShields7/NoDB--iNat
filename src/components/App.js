@@ -14,8 +14,8 @@ class App extends Component {
       // //favList is entire favList
       getLocalTemp:['hello'],
       //favId gets add to fav list
-
-    };
+   
+    }
     this.updateQuery = this.updateQuery.bind( this );
     this.queryLocal = this.getLocal.bind( this );
     this.searchApiCall = this.searchApiCall.bind( this );
@@ -32,7 +32,19 @@ class App extends Component {
     })
   }
   searchApiCall = () => {
-    axios.get(`https://api.inaturalist.org/v1/taxa?q=${this.state.queryStr}&is_active=true`).then(result => {console.log('searchApiCall running',result.data.results);
+    axios.get(`https://api.inaturalist.org/v1/taxa?q=${this.state.queryStr}`).then(result => {console.log('searchApiCall running',result.data.results);
+  //   let photoArr = result.data.results;
+  //   for (let i = 0; i < photoArr.length; i++){
+  //     for( let key in photoArr[i]){
+  //       let {default_photo} = photoArr[i][key]
+  //       if(photoArr[i][key] = default_photo && default_photo === null) { 
+  //           default_photo = './question-mark.png'
+  //         } else if (photoArr[i][key] = default_photo && typeof(default_photo) === 'object'){
+  //           default_photo = default_photo.medium_url;
+  //           console.log('name',photoArr[i]['name'],'making photo', default_photo)
+  //         }   
+  //     }
+  // }
       this.setState ({
         taxa: result.data.results
       })
@@ -47,68 +59,83 @@ class App extends Component {
     console.log('addFavFn running, before postLocal, e is', e)
     this.setState({
       favId: e,
-    })
-    this.postLocal(e);
-    // console.log('addFavFn running, after postLocal, e:', e,'favId is', this.state.favId)
+    }, () =>
+    this.postLocal(e))
+  }
+
+  modifyPhoto(){
+
+  }
+  // changeFavFn(e){
+  //   console.log('changeFavFn running, before putLocal, e is',e)
+  //     this.setState({
+  //       favId: e,
+  //     })
+  // }
+  seeFavFn (){
+    axios.get('http://localhost:4000/api/data').then(res => {
+      console.log('seeFavFn running, res is',res);
+      console.log('seeFavFn running, res.data is',res.data);
+
+      this.setState({
+        taxa: res.data
+      })
+    })  
   }
   // LOCAL REQUESTS
   getLocal(){
     axios.get('http://localhost:4000/api/data').then(res => {
       console.log('getLocal running, res.data is',res.data);
-      let val = this.state.getLocalTemp.push(res.data)
+      let ArrFiltered = res.data.filter(elem => elem !== null)
+      console.log('ArrFiltered is', ArrFiltered)
       this.setState({
-        getLocalTemp: val
-      }, console.log('getLocal running, this.state.getLocalTemp is', this.state.getLocalTemp))
+        taxa: ArrFiltered
+      })
     })
   }
-//   postLocal(){
-//     let {favId} = this.state;
-//     axios.get('http://localhost:4000/api/data', {favId}).then(res => {this.setState({
-//       local: res.data
-//       }, console.log('postLocal running, this.state.local', this.state.local), console.log('postLocal running, res.data', res.data))
-//   })
-// }
+  putLocal(){
+    axios
+  }
 postLocal(){
   axios.post('http://localhost:4000/api/data', {id:this.state.favId}).then(res => {
-
     console.log('postLocal running, res.data is',res.data);
-    // this.setState({
-    //   local: val
-    // }
-    // , console.log('getLocal running, this.state.local is', this.state.local)
 
   })
 }
 
   render() {
     const {taxa, favId} = this.state
-    //console.log('render running',this.state)
-    console.log('this.state',this.state)
+    console.log('render running',this.state.taxa)
+    // console.log('this.state',this.state)
     return (
       <div className="App__parent">
-        <Header 
+        <Header
+        seeFavFn={this.seeFavFn}
         addFavFn={this.addFavFn}
         getLocal={this.getLocal}
         postLocal={this.postLocal}
         local={this.state.getLocalTemp}
         updateQuery={this.updateQuery} 
         searchButton={this.searchApiCall} 
+        postLocal={this.postLocal}
         hQuery={this.state.searchQuery}/>
-        <section className="Species__content">
+        <section className="Species__parent">
+          <section className="Species__content">
+            {
+              taxa.map(elem => (
+                <Species
+                
+                addFavFn={this.addFavFn}
+                id={elem.id}
+                latin_name={elem.name}
+                wiki_url={elem.wikipedia_url}
+                name={elem.preferred_common_name}
+                default_photo={elem.default_photo}
+                />
 
-          {
-            taxa.map(elem => (
-              <Species
-              key={elem.key}
-              addFavFn={this.addFavFn}
-              id={elem.id}
-              latin_name={elem.name}
-              wiki_url={elem.wikipedia_url}
-              name={elem.preferred_common_name}
-              default_photo={elem.default_photo}
-              />
-            ))
-          }
+              ))
+            }
+          </section>
         </section>
       </div>
     );

@@ -11,7 +11,8 @@ const favTaxaId = 0;
 //App.js sends get request to local server
 app.get('/api/data', (req, res) => {
     console.log('get success',favTaxa);
-    res.status(200).send(favTaxa);
+    res.status(200);
+    res.json(favTaxa);
 })
 //App.js sends post request to local server
 app.post('/api/data', (req, res) => {
@@ -23,7 +24,9 @@ app.post('/api/data', (req, res) => {
     //     wiki_url,
     //     photo
     // }
+    console.log('faxTaxa is', favTaxa)
     favTaxa.push(req.body.id)
+    console.log('after push favTaxa is', favTaxa)
     // console.log('req.body',req.body);
     //id = id + 1;
     //favTaxa.push(newTaxa);

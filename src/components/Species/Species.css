@@ -1,4 +1,4 @@
-
+/* 
 
 .Compose__top {
   display: flex;
@@ -38,10 +38,10 @@
   border: none;
   border-radius: 5px;
   padding: 8px 16px;
-}
+} */
 
 .Species_box {
-  width: 300px;
+  width: 260px;
   height: 400px;
   background-color: #FFF;
   border-radius: 10px;
@@ -53,24 +53,27 @@
   justify-content: bottom;
   align-items: flex-start;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 10px;
 }
 
 Species_parent {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  /* width: 100%; */
 }
 
 Species_single {
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .name {
   font-size: 18px;
   font-style: bold;
   position: top;
+
 }
 
 .latin_name {
@@ -85,6 +88,8 @@ a {
   color: rgb(0, 100, 5);
 }
 
-img{
+.Species_single > img {
+  justify-content: center;
+  /* width: 240px; */
   height: 150px;
 }
