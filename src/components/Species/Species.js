@@ -10,7 +10,7 @@ export default class Compose extends Component {
   render() {
     // Destructuring
     // const { text } = this.state;
-    const {addFavFn,favId,id,name,latin_name,wiki_url,default_photo} = this.props;
+    const {addFavFn,id,name,latin_name,wiki_url,default_photo} = this.props;
       //REASSIGNING PHOTO URL WHERE NULL
     let photo = '';
     if(default_photo === null){
@@ -32,8 +32,11 @@ export default class Compose extends Component {
           {/* <button onClick={}>Add to favorite Taxa!</button> */}
           <AddFav
           addFavFn={addFavFn}
+          name={name}
+          latin_name={latin_name}
           id={id}
-          favId={this.props.favId}
+          wiki_url={wiki_url}
+          photo={photo}
           />
           <div value={wiki_url}>
             <a href={wiki_url}>Wikipedia Link for {name}</a>

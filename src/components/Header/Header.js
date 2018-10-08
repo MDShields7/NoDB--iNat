@@ -13,7 +13,7 @@ import Search from '../Search/Search';
 export default class Header extends Component {
 
   render() {
-    const {updateQuery,hQuery,local,getLocal, postLocal } = this.props;
+    const {updateQuery,hQuery,local,getLocal, addFavFn,postLocal } = this.props;
     return (
       <section className="Header__parent">
         <section className="Header__content_top">
@@ -30,8 +30,8 @@ export default class Header extends Component {
             <Search updateQuery={updateQuery} searchButton={this.props.searchButton} sQuery={hQuery}/>
             <button onClick={getLocal}>test getLocal</button>
             <p>{local}</p>
-            <button onClick={postLocal}>test postLocal</button>
-            <p>{local}</p>
+            <button onClick={addFavFn}>test postLocal</button>
+            <p>{}</p>
             {/* Displays the profile icon */}
             <div className="Header__profile">
               <ProfileIcon />

@@ -14,7 +14,7 @@ class App extends Component {
       // //favList is entire favList
       getLocalTemp:['hello'],
       //favId gets add to fav list
-      favId: 0,
+
     };
     this.updateQuery = this.updateQuery.bind( this );
     this.queryLocal = this.getLocal.bind( this );
@@ -44,11 +44,10 @@ class App extends Component {
   }  
   //FUNCTIONAL REQUESTS
   addFavFn(e){
-    console.log('addFavFn running, before postLocal')
-
-    // this.setState({
-    //   favId: e,
-    // })
+    console.log('addFavFn running, before postLocal, e is', e)
+    this.setState({
+      favId: e,
+    })
     this.postLocal(e);
     // console.log('addFavFn running, after postLocal, e:', e,'favId is', this.state.favId)
   }
@@ -70,7 +69,7 @@ class App extends Component {
 //   })
 // }
 postLocal(){
-  axios.post('http://localhost:4000/api/data', {id:'testPost'}).then(res => {
+  axios.post('http://localhost:4000/api/data', {id:this.state.favId}).then(res => {
 
     console.log('postLocal running, res.data is',res.data);
     // this.setState({
@@ -88,6 +87,7 @@ postLocal(){
     return (
       <div className="App__parent">
         <Header 
+        addFavFn={this.addFavFn}
         getLocal={this.getLocal}
         postLocal={this.postLocal}
         local={this.state.getLocalTemp}
@@ -101,7 +101,6 @@ postLocal(){
               <Species
               key={elem.key}
               addFavFn={this.addFavFn}
-              favId={favId}
               id={elem.id}
               latin_name={elem.name}
               wiki_url={elem.wikipedia_url}
